@@ -18,11 +18,15 @@ function set_version {
 }
 
 function setup_ssh {
+  mkdir -p /root/.ssh/config
+
   if [[ -d "/ssh" ]]
   then
     cp /ssh/* /root/.ssh
     chmod -R 600 /root/.ssh
   fi
+
+  printf "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 }
 
 function build {
