@@ -18,7 +18,7 @@ function set_version {
 }
 
 function setup_ssh {
-  mkdir -p /root/.ssh/config
+  mkdir -p /root/.ssh
 
   if [[ -d "/ssh" ]]
   then
