@@ -36,7 +36,7 @@ function release {
   docker tag -f $name:$sha $name:latest
 
   echo "Pushing $name:$version..."
-  docker login -u "$DOCKER_PUSH_USERNAME" -p "$DOCKER_PUSH_PASSWORD"
+  docker login -u "$DOCKER_PUSH_USERNAME" -p "$DOCKER_PUSH_PASSWORD" -e "$DOCKER_PUSH_EMAIL"
 
   docker push $name:$version
   docker push $name:latest
