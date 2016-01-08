@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
 sha=$(git rev-parse --short HEAD)
 name=$DOCKER_PUSH_NAME
