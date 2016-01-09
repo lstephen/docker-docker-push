@@ -6,14 +6,9 @@ sha=$(git rev-parse --short HEAD)
 name=$DOCKER_PUSH_NAME
 
 function set_version {
-  version=$(git log --oneline --first-parent master | wc -l | xargs)
-
-  branch=$(git branch | grep '*')
-
-  if [[ ! $branch =~ master$ ]]
+  if [[ -f "VERSION" ]]
   then
-    branch_count=$[$(git log --oneline --first-parent | wc -l | xargs) - $version]
-    version="$version.dev$branch_count"
+    version=$(cat VERSION)
   fi
 }
 
@@ -35,20 +30,23 @@ function build {
 }
 
 function release {
-  echo "Docker tagging $name:$version..."
-  docker tag -f $name:$sha $name:$version
-  docker tag -f $name:$sha $name:latest
-
-  echo "Pushing $name:$version..."
   docker login -u "$DOCKER_PUSH_USERNAME" -p "$DOCKER_PUSH_PASSWORD" -e "$DOCKER_PUSH_EMAIL"
 
-  docker push $name:$version
+  echo "Pushing $name:latest..."
+  docker tag -f $name:$sha $name:latest
   docker push $name:latest
 
-  echo "Git tagging $name:$version..."
-  git_tag="v$version"
-  git tag $git_tag
-  git push origin $git_tag
+  if [[ -n "$version" ]]
+  then
+    echo "Pushing $name:$version..."
+    docker tag -f $name:$sha $name:$version
+    docker push $name:$version
+
+    echo "Git tagging $name:$version..."
+    git_tag="v$version"
+    git tag $git_tag
+    git push origin $git_tag
+  fi
 }
 
 set_version
