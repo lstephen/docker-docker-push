@@ -19,7 +19,7 @@ node('construi') {
 }
 
 if (env.BRANCH_NAME == 'master') {
-  node('construi')
+  node('construi') {
     stage 'Release'
 
     withCredentials(
