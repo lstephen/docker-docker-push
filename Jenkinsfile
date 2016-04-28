@@ -15,7 +15,7 @@ node('construi') {
   sh "git checkout ${env.BRANCH_NAME}"
 
   construi 'versiune'
-  currentBuild.description = "v${new File('VERSION').text}"
+  currentBuild.description = "v${readFile('VERSION')}"
 
   stage 'Build'
   construi 'build'
@@ -26,7 +26,7 @@ if (env.BRANCH_NAME == 'master') {
     stage 'Release'
 
     construi 'versiune'
-    currentBuild.description = "Release v${new File('VERSION').text}"
+    currentBuild.description = "Release v${readFile('VERSION')}"
 
     withCredentials(
       [
