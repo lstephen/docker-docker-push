@@ -11,19 +11,17 @@ def construi(target) {
   }
 }
 
+stage 'Build'
 node('construi') {
-  stage 'Checkout'
   checkout scm
   sh "git checkout origin/${env.BRANCH_NAME}"
 
-  stage 'Build'
   construi 'build'
 }
 
 if (env.BRANCH_NAME == 'master') {
+  stage 'Release'
   node('construi') {
-    stage 'Release'
-
     construi 'versiune'
     currentBuild.description = "Release v${readFile('VERSION')}"
 
