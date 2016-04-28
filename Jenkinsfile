@@ -1,3 +1,5 @@
+#!groovy
+
 properties(
   [ [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '30'] ]
   , [$class: 'GithubProjectProperty', projectUrlStr: 'http://github.com/lstephen/docker-docker-push']
@@ -12,7 +14,7 @@ def construi(target) {
 node('construi') {
   stage 'Checkout'
   checkout scm
-  sh "git checkout ${env.BRANCH_NAME}"
+  sh "git checkout origin/${env.BRANCH_NAME}"
 
   stage 'Build'
   construi 'build'
