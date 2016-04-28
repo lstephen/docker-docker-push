@@ -39,7 +39,7 @@ function release {
   if [[ -n "$version" ]]
   then
     echo "Pushing $name:$version..."
-    docker tag -f $name:$sha $name:$version
+    docker tag  $name:$sha $name:$version
     docker push $name:$version
 
     echo "Git tagging $name:$version..."
