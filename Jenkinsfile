@@ -1,6 +1,6 @@
 properties(
   [ [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '30'] ]
-  , [$class: 'GithubProjectProperty', projectUrlStr: 'http://github.com/lstephen/docker-jenkins']
+  , [$class: 'GithubProjectProperty', projectUrlStr: 'http://github.com/lstephen/docker-docker-push']
   ])
 
 def construi(target) {
@@ -16,8 +16,10 @@ node('construi') {
 
   stage 'Build'
   construi 'build'
+}
 
-  if (env.BRANCH_NAME == 'master') {
+if (env.BRANCH_NAME == 'master') {
+  node('construi')
     stage 'Release'
 
     withCredentials(
