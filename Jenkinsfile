@@ -37,7 +37,6 @@ if (env.BRANCH_NAME == 'master') {
         , credentialsId: 'cfbecb37-737f-4597-86f7-43fb2d3322cc' ]
       ]) {
         construi 'release'
-        currentBuild.description = new File('VERSION').text
     }
   }
 }
