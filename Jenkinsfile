@@ -14,6 +14,9 @@ node('construi') {
   checkout scm
   sh "git checkout ${env.BRANCH_NAME}"
 
+  construi 'versiune'
+  currentBuild.description = "v#{new File('VERSION').text}"
+
   stage 'Build'
   construi 'build'
 }
@@ -21,6 +24,9 @@ node('construi') {
 if (env.BRANCH_NAME == 'master') {
   node('construi') {
     stage 'Release'
+
+    construi 'versiune'
+    currentBuild.description = "Release v#{new File('VERSION').text}"
 
     withCredentials(
       [
@@ -34,6 +40,7 @@ if (env.BRANCH_NAME == 'master') {
         , credentialsId: 'cfbecb37-737f-4597-86f7-43fb2d3322cc' ]
       ]) {
         construi 'release'
+        currentBuild.description = new File('VERSION').text
     }
   }
 }
