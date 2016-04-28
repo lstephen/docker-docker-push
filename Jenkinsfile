@@ -14,9 +14,6 @@ node('construi') {
   checkout scm
   sh "git checkout ${env.BRANCH_NAME}"
 
-  construi 'versiune'
-  currentBuild.description = "v${readFile('VERSION')}"
-
   stage 'Build'
   construi 'build'
 }
