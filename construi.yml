@@ -13,7 +13,7 @@ volumes:
 
 targets:
   versiune:
-    image: lstephen/versiune:8
+    image: lstephen/versiune:13
     run: VERSION
 
   build: build
